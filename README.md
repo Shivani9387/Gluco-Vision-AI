@@ -1,62 +1,95 @@
-# Gluco-Vision-AI
-Gluco Vision AI is a deep learning system that analyzes retinal fundus images to predict diabetic retinopathy severity and estimate blood glucose levels. It uses lesion segmentation, DR classification, and HbA1c-based regression modeling to provide a non-invasive and interpretable diabetes monitoring approach.
-Project Objective
-Gluco Vision AI is a fully automated and non-invasive deep learning system developed to predict diabetic retinopathy severity and estimate fasting blood glucose levels using retinal fundus images. The project aims to reduce dependency on invasive blood tests by combining retinal image preprocessing, lesion segmentation, DR classification, and glucose prediction into a single AI-powered pipeline.
-Dataset Used
-FGADR Dataset
-Used for retinal lesion segmentation and diabetic retinopathy severity classification. The dataset contains annotated retinal fundus images with lesions such as:
-Microaneurysms
-Hemorrhages
-Hard Exudates
-Soft Exudates
-Neovascularization
-IRMA
-NHANES Dataset
-Used for blood glucose prediction by learning the relationship between HbA1c values and fasting blood glucose levels.
-Methodology
-The proposed system follows a five-stage pipeline:
-1. Image Preprocessing
-   Black border removal
-   Ben Graham illumination correction
-   CLAHE contrast enhancement
-   Image resizing to 512×512
-2. Lesion Segmentation
-   U-Net with EfficientNet-B4 encoder
-   Detects retinal lesions at pixel level
-3. DR Severity Classification
-   ResNet-50 CNN model
-   Uses RGB image + lesion mask as 4-channel input
-   Predicts DR severity from Grade 0 to Grade 4
-4. HbA1c Mapping & Feature Engineering
-   DR grade mapped to HbA1c ranges using UKPDS lookup tables
-   Feature vector generation for regression analysis
-5. Blood Glucose Prediction
-   Regression models trained on NHANES dataset
-   Final fasting blood glucose estimated in mg/dL using the best-performing model
-Models Used
-Deep Learning Models
-U-Net + EfficientNet-B4
-ResNet-50 CNN
-Regression Models
-ADA Formula
-Lasso Regression
-CART Decision Tree
-Random Forest Regressor
-Lasso Regression achieved the best performance and was selected as the final glucose prediction model.
-Results / Accuracy
-Lesion Segmentation
-Best mIoU: 0.1116
-DR Classification
-Validation Accuracy: 88.09%
-Blood Glucose Prediction
-Best Model: Lasso Regression
-MAE: 10.48 mg/dL
-R² Score: 0.6283
-The proposed system demonstrates the feasibility of non-invasive diabetes severity prediction using retinal fundus imaging.
-Future Scope
-Integration with hospital healthcare systems
-Using larger and more diverse retinal datasets
-Improving segmentation accuracy with advanced architectures
-Continuous patient monitoring and longitudinal analysis
-Integration of Explainable AI (XAI) for better clinical interpretability
-Extending the system to detect additional retinal diseases beyond diabetic retinopathy
+# Gluco Vision AI
+
+A non-invasive deep learning system for predicting diabetic retinopathy severity and estimating fasting blood glucose levels from retinal fundus images.
+
+---
+
+## Overview
+
+Gluco Vision AI was built to explore whether retinal imaging alone can provide meaningful insight into a patient's diabetic condition — without a single blood draw. The system combines image preprocessing, lesion segmentation, DR grading, and glucose regression into one end-to-end pipeline.
+
+The motivation is straightforward: the retina is the only part of the human body where blood vessels can be directly observed non-invasively. Changes in these vessels correlate strongly with systemic conditions like diabetes. This project attempts to quantify that relationship using modern deep learning.
+
+---
+
+## Datasets
+
+**FGADR** — Retinal fundus images with pixel-level annotations for six lesion types:
+- Microaneurysms
+- Hemorrhages
+- Hard Exudates
+- Soft Exudates
+- Neovascularization
+- IRMA
+
+**NHANES** — Population health survey data used to model the relationship between HbA1c and fasting blood glucose levels.
+
+---
+
+## Pipeline
+
+### 1. Image Preprocessing
+Raw fundus images are cleaned and normalized before entering the model. This includes black border removal, Ben Graham illumination correction, CLAHE contrast enhancement, and resizing to 512×512.
+
+### 2. Lesion Segmentation
+A U-Net with an EfficientNet-B4 encoder performs pixel-level detection of retinal lesions. The segmentation output is a multi-class mask covering all six lesion categories.
+
+### 3. DR Severity Classification
+A ResNet-50 model takes a 4-channel input — the original RGB image concatenated with the lesion mask — and classifies diabetic retinopathy severity on a scale from Grade 0 (no DR) to Grade 4 (proliferative DR).
+
+### 4. HbA1c Mapping
+The predicted DR grade is mapped to a corresponding HbA1c range using UKPDS lookup tables (UKPDS BMJ, 2000). This bridges the gap between clinical DR grading and metabolic indicators.
+
+### 5. Blood Glucose Prediction
+Regression models trained on the NHANES dataset estimate fasting blood glucose in mg/dL. Lasso Regression outperformed other approaches and was selected as the final model.
+
+---
+
+## Models
+
+| Component | Architecture |
+|---|---|
+| Lesion Segmentation | U-Net + EfficientNet-B4 |
+| DR Classification | ResNet-50 (4-channel input) |
+| Glucose Prediction | Lasso Regression (best), also evaluated CART, Random Forest, ADA Formula |
+
+---
+
+## Results
+
+| Task | Metric | Value |
+|---|---|---|
+| Lesion Segmentation | mIoU | 0.1116 |
+| DR Classification | Validation Accuracy | 88.09% |
+| Glucose Prediction (Lasso) | MAE | 10.48 mg/dL |
+| Glucose Prediction (Lasso) | R² Score | 0.6283 |
+
+The segmentation mIoU reflects the difficulty of the task — retinal lesions are small, sparse, and class-imbalanced. The DR classifier and glucose regression results are more clinically promising.
+
+---
+
+## Limitations
+
+- Segmentation performance is constrained by dataset size and class imbalance
+- Glucose prediction relies on population-level HbA1c-glucose correlations, which vary across individuals
+- The system has not been evaluated on external clinical datasets
+
+---
+
+## Future Work
+
+- Deploy as a real-time web or mobile application
+- Integrate Explainable AI (XAI) to make predictions interpretable for clinicians
+- Improve segmentation with newer architectures and larger datasets
+- Extend detection to other retinal diseases beyond diabetic retinopathy
+- Support longitudinal monitoring for continuous patient tracking
+- Explore direct integration with hospital health record systems
+
+---
+
+## References
+
+- UKPDS Group. *Intensive blood-glucose control with sulphonylureas or insulin.* BMJ, 2000.
+- American Diabetes Association. *Translating the A1C assay into estimated average glucose values.* Diabetes Care, 2008.
+- FGADR Dataset: Fine-Grained Annotated Diabetic Retinopathy
+- NHANES: National Health and Nutrition Examination Survey
