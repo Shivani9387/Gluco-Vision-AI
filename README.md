@@ -2,7 +2,7 @@
 
 A non-invasive deep learning system for predicting diabetic retinopathy severity and estimating fasting blood glucose levels from retinal fundus images.
 
----
+
 
 ## Overview
 
@@ -10,7 +10,7 @@ Gluco Vision AI was built to explore whether retinal imaging alone can provide m
 
 The motivation is straightforward: the retina is the only part of the human body where blood vessels can be directly observed non-invasively. Changes in these vessels correlate strongly with systemic conditions like diabetes. This project attempts to quantify that relationship using modern deep learning.
 
----
+
 
 ## Datasets
 
@@ -24,7 +24,6 @@ The motivation is straightforward: the retina is the only part of the human body
 
 **NHANES** — Population health survey data used to model the relationship between HbA1c and fasting blood glucose levels.
 
----
 
 ## Pipeline
 
@@ -43,7 +42,7 @@ The predicted DR grade is mapped to a corresponding HbA1c range using UKPDS look
 ### 5. Blood Glucose Prediction
 Regression models trained on the NHANES dataset estimate fasting blood glucose in mg/dL. Lasso Regression outperformed other approaches and was selected as the final model.
 
----
+
 
 ## Models
 
@@ -53,7 +52,7 @@ Regression models trained on the NHANES dataset estimate fasting blood glucose i
 | DR Classification | ResNet-50 (4-channel input) |
 | Glucose Prediction | Lasso Regression (best), also evaluated CART, Random Forest, ADA Formula |
 
----
+
 
 ## Results
 
@@ -66,7 +65,6 @@ Regression models trained on the NHANES dataset estimate fasting blood glucose i
 
 The segmentation mIoU reflects the difficulty of the task — retinal lesions are small, sparse, and class-imbalanced. The DR classifier and glucose regression results are more clinically promising.
 
----
 
 ## Limitations
 
@@ -74,7 +72,6 @@ The segmentation mIoU reflects the difficulty of the task — retinal lesions ar
 - Glucose prediction relies on population-level HbA1c-glucose correlations, which vary across individuals
 - The system has not been evaluated on external clinical datasets
 
----
 
 ## Future Work
 
@@ -85,7 +82,7 @@ The segmentation mIoU reflects the difficulty of the task — retinal lesions ar
 - Support longitudinal monitoring for continuous patient tracking
 - Explore direct integration with hospital health record systems
 
----
+
 
 ## References
 
