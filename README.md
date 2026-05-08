@@ -37,17 +37,6 @@ Regression models trained on the NHANES dataset estimate fasting blood glucose i
 | Glucose Prediction (Lasso) | MAE | 10.48 mg/dL |
 | Glucose Prediction (Lasso) | R² Score | 0.6283 |
 The segmentation mIoU reflects the difficulty of the task — retinal lesions are small, sparse, and class-imbalanced. The DR classifier and glucose regression results are more clinically promising.
-## Limitations
-- Segmentation performance is constrained by dataset size and class imbalance
-- Glucose prediction relies on population-level HbA1c-glucose correlations, which vary across individuals
-- The system has not been evaluated on external clinical datasets
-## Future Work
-- Deploy as a real-time web or mobile application
-- Integrate Explainable AI (XAI) to make predictions interpretable for clinicians
-- Improve segmentation with newer architectures and larger datasets
-- Extend detection to other retinal diseases beyond diabetic retinopathy
-- Support longitudinal monitoring for continuous patient tracking
-- Explore direct integration with hospital health record systems
 ## References
 
 - UKPDS Group. *Intensive blood-glucose control with sulphonylureas or insulin.* BMJ, 2000.
